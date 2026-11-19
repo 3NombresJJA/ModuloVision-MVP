@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content" android:fillViewport="true">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="24dp">
+        <TextView android:id="@+id/tvProfileTitle" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Configura tu perfil" android:textSize="22sp" android:textStyle="bold" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"
+            android:text="Estos datos permiten personalizar tus recomendaciones de entrenamiento." />
+        <EditText android:id="@+id/etAge" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="Edad (años) · Ej. 25" android:inputType="number" android:maxLength="3" />
+        <EditText android:id="@+id/etHeight" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="Altura (cm) · Ej. 170" android:inputType="number" android:maxLength="3" />
+        <EditText android:id="@+id/etWeight" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="Peso (kg) · Ej. 68.5" android:inputType="numberDecimal" android:maxLength="5" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Género" android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgGender" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <RadioButton android:id="@+id/rbMale" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Masculino" />
+            <RadioButton android:id="@+id/rbFemale" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Femenino" />
+            <RadioButton android:id="@+id/rbOther" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Otro" />
+        </RadioGroup>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="end" android:orientation="horizontal">
+            <Button android:id="@+id/btnCancelProfile" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cancelar" />
+            <Button android:id="@+id/btnSaveProfile" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Guardar" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
