@@ -53,6 +53,7 @@ class PoseLandmarkerHelper(
     /** Shared with repetition telemetry so frame skipping and analysis use one phase machine. */
     val exerciseFSM = ExerciseFSM()
     private var lastInferenceTimestamp: Long = 0L
+    @Volatile var isPausedForSlm: Boolean = false
 
     init {
         setupPoseLandmarker()
@@ -162,6 +163,7 @@ class PoseLandmarkerHelper(
         imageProxy: ImageProxy,
         isFrontCamera: Boolean
     ) {
+        if (isPausedForSlm) return
         if (runningMode != RunningMode.LIVE_STREAM) {
             throw IllegalArgumentException(
                 "Attempting to call detectLiveStream" +

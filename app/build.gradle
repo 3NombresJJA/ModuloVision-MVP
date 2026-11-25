@@ -23,13 +23,14 @@ plugins {
 android {
     namespace 'com.google.mediapipe.examples.poselandmarker'
     compileSdk 34
-
+    ndkVersion "28.2.13676358"
     defaultConfig {
         applicationId "com.google.mediapipe.examples.poselandmarker"
         minSdk 24
         targetSdk 34
         versionCode 1
         versionName "1.0"
+        ndk { abiFilters "arm64-v8a" }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -51,6 +52,9 @@ android {
     buildFeatures {
         viewBinding true
     }
+    externalNativeBuild {
+        cmake { path = file("src/main/cpp/CMakeLists.txt"); version = "3.22.1" }
+    }
 }
 
 // import DownloadMPTasks task
@@ -61,6 +65,9 @@ dependencies {
 
     // Kotlin lang
     implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
 
     // App compat and UI things
     implementation 'androidx.appcompat:appcompat:1.5.1'

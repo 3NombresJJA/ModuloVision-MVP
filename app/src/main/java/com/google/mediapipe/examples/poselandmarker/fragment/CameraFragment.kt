@@ -54,6 +54,7 @@ import com.google.mediapipe.examples.poselandmarker.DeadliftStrategy
 import com.google.mediapipe.examples.poselandmarker.BicepCurlStrategy
 import com.google.mediapipe.examples.poselandmarker.MainViewModel
 import com.google.mediapipe.examples.poselandmarker.R
+import com.google.mediapipe.examples.poselandmarker.slm.SlmFeedbackDialogFragment
 import com.google.mediapipe.examples.poselandmarker.databinding.FragmentCameraBinding
 import com.google.mediapipe.tasks.vision.core.RunningMode
 import java.util.Locale
@@ -185,6 +186,9 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
         }
 
         // Attach listeners to UI control widgets
+        parentFragmentManager.setFragmentResultListener(
+            SlmFeedbackDialogFragment.RESULT_KEY, viewLifecycleOwner
+        ) { _, _ -> if (this::poseLandmarkerHelper.isInitialized) poseLandmarkerHelper.isPausedForSlm = false }
         initBottomSheetBehavior()
         initBottomSheetControls()
         fragmentCameraBinding.btnStartTrain.setOnClickListener {
@@ -388,7 +392,12 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
         }
         if (this::repetitionTelemetryManager.isInitialized && repetitionTelemetryManager.isTrainingActive) {
             val setJson = repetitionTelemetryManager.endTrainingSet(userProfileRepository.getProfile())
-            setJson?.let { jsonOutput -> Log.d("JSON", jsonOutput) }
+            setJson?.let { jsonOutput ->
+                Log.d("JSON", jsonOutput)
+                if (this::poseLandmarkerHelper.isInitialized) poseLandmarkerHelper.isPausedForSlm = true
+                SlmFeedbackDialogFragment.newInstance(jsonOutput)
+                    .show(parentFragmentManager, "SlmFeedbackDialog")
+            }
         }
         seriesInProgress = false
         if (this::poseLandmarkerHelper.isInitialized) poseLandmarkerHelper.exerciseFSM.setEnabled(true)
